@@ -2,8 +2,8 @@
 
 // //Find screen height and set design
 // var screenHeight = window.innerHeight;
-// var sBar = document.getElementByClassName("sidebar");
-// sBar.setAttribute(height, screenheight);
+// var sBar = document.getElementsByClassName("sidebar")[0];
+// sBar.setAttribute(style.height, screenheight);
 
 var openingHours = ["6am", "7am", "8am", "9am", "10am", "11am", "12pm", "1pm", "2pm", "3pm", "4pm", "5pm", "6pm", "7pm"]; //array of opening hours
 
