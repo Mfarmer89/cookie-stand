@@ -1,22 +1,56 @@
 "use strict";
 
+// //Find screen height and set design
+// var screenHeight = window.innerHeight;
+// var sBar = document.getElementByClassName("sidebar");
+// sBar.setAttribute(height, screenheight);
+
+var openingHours = ["6am", "7am", "8am", "9am", "10am", "11am", "12pm", "1pm", "2pm", "3pm", "4pm", "5pm", "6pm", "7pm"]; //array of opening hours
+
 //store 1
 var store1 = {
   location: "1st and Pike",
+  // openingTime = {
+  //   weekdays:
+  //   weekends:
+  // };
+  // phone: "1(246)435-5555",
   minCustHr: 23,
   maxCustHr: 65,
   avgCookieSale: 6.3,
   randNoCust: randomNoCustomersHr,
-  // createArrayOfSalesPerHour: createArrayOfSalesPerHour
+  createArrayOfSalesPerHour: createArrayOfSalesPerHour
 };
 
+//Random number of customers per hour
 function randomNoCustomersHr() {
   var min = Math.ceil(this.minCustHr);
   var max = Math.floor(this.maxCustHr);
   return Math.floor(Math.random() * (max - min + 1)) + min;
   //The maximum is inclusive and the minimum is inclusive
 }
-console.log(store1.randNoCust());
+console.log(store1.randNoCust()); //test
+
+//Array of randomly generated sales per hour
+function createArrayOfSalesPerHour () {
+  var array = [];
+  for (var i = 0 ;i < openingHours.length; i++) {
+    array.push(Math.round(this.randNoCust() * this.avgCookieSale));
+  }
+  return array;
+}
+//calculate total 
+var store1Array = store1.createArrayOfSalesPerHour();
+ 
+//Create list of estimated sales by hour
+for (var j = 0; j < openingHours.length; j++) {
+  document.querySelector("ul");
+  var node = document.createElement("LI");                 
+  var textnode = document.createTextNode(`${openingHours[j]}: ${store1Array[j]}`);         
+  node.appendChild(textnode);                              
+  document.querySelector("ul").appendChild(node);     
+}
+
 
 // //store 2
 // var store2 = {
@@ -57,26 +91,6 @@ console.log(store1.randNoCust());
 //   randNoCust: randomNoCustomersHr,
 //   createArrayOfSalesPerHour: createArrayOfSalesPerHour
 // };
-
-// function randomNoCustomersHr() {
-//   var min = Math.ceil(this.minCustHr);
-//   var max = Math.floor(this.maxCustHr);
-//   return Math.floor(Math.random() * (max - min + 1)) + min;
-//   //The maximum is inclusive and the minimum is inclusive
-// }
-
-
-// // CREATE ARRAY
-// function createArrayOfSalesPerHour () {
-//   var array = [];
-//   for (var i = 0 ;i < 14; i++) {
-//     array.push(this.randNoCust() * this.avgCookieSales);
-//   }
-// return array;
-// console.log(array);
-// }
-
-
 
 
 // // TO DISPLAY ON PAGE
