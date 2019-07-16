@@ -1,0 +1,23 @@
+#fish {
+  position: absolute;
+  left: 20%;
+  top: 0;
+  z-index: 1;
+}
+
+h1 {
+  color: white;
+  font-family: 'Bahianita', cursive;
+  font-size: 8em;
+  position: absolute;
+  left: 45%;
+  top: 100px;
+  z-index: 2;
+}
+
+.sidebar {
+  background: #04f323;
+  display: inline-block;
+  min-height: 100px;
+  width:15%;
+}
