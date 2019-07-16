@@ -2,95 +2,74 @@
 
 // //Find screen height and set design
 // var screenHeight = window.innerHeight;
-// var sBar = document.getElementsByClassName("sidebar")[0];
-// sBar.setAttribute(style.height, screenheight);
 
 var openingHours = ["6am", "7am", "8am", "9am", "10am", "11am", "12pm", "1pm", "2pm", "3pm", "4pm", "5pm", "6pm", "7pm"]; //array of opening hours
 
-//store 1
-var store1 = {
-  location: "1st and Pike",
-  // openingTime = {
-  //   weekdays:
-  //   weekends:
-  // };
-  // phone: "1(246)435-5555",
-  minCustHr: 23,
-  maxCustHr: 65,
-  avgCookieSale: 6.3,
-  randNoCust: randomNoCustomersHr,
-  createArrayOfSalesPerHour: createArrayOfSalesPerHour
+//Object Constructor Method
+function Store(location, minCust, maxCust, avgHrSale) {
+  this.location = location;
+  this.minCust = minCust;
+  this.maxCust = maxCust;
+  this.avgHrSale = avgHrSale;
 };
 
-//Random number of customers per hour
-function randomNoCustomersHr() {
+//Store functions added 
+
+Store.prototype.randNoCust = function() {
   var min = Math.ceil(this.minCustHr);
   var max = Math.floor(this.maxCustHr);
   return Math.floor(Math.random() * (max - min + 1)) + min;
-  //The maximum is inclusive and the minimum is inclusive
-}
-console.log(store1.randNoCust()); //test
+};
 
-//Array of randomly generated sales per hour
-function createArrayOfSalesPerHour () {
+Store.prototype.createArrayOfSalesPerHour = function() {
   var array = [];
   for (var i = 0 ;i < openingHours.length; i++) {
     array.push(Math.round(this.randNoCust() * this.avgCookieSale));
   }
   return array;
+};
+
+//Creating individual store objects
+var store1 = new Store("1st and Pike", 23, 65, 6.3);
+var store2 = new Store("SeaTac Airport", 3, 24, 1.2);
+var store3 = new Store("Seattle Center", 11, 38, 3.7);
+var store4 = new Store("Capitol Hill", 20, 38, 2.3);
+var store5 = new Store("Alki", 2, 16, 4.6);
+
+//Array of fake table data
+var array = [
+  ["", "6:00", "7:00", "8:00"],
+  ["store1", 53, 21, 18],
+  ["store2", 83, 4, 0],
+  ["store3", 60, 121, 48]
+];
+
+var parentEl = document.getElementById("estimates");
+var tableEl = document.createElement("table");
+parentEl.appendChild(tableEl);
+for (var row = 0; row < array.length; row++) {
+  var newRow = document.createElement("tr");
+  for (var col = 0; col < array[row].length; col++) {
+    var cellType = (row === 0) ? "th" : "td";
+    var newCell = document.createElement(cellType);
+    newCell.textContent = array[row][col];
+    newRow.appendChild(newCell);
+  }
+  tableEl.appendChild(newRow);
 }
-//calculate total 
-var store1Array = store1.createArrayOfSalesPerHour();
+
+
+// var store1Array = store1.createArrayOfSalesPerHour();
  
-//Create list of estimated sales by hour
-for (var j = 0; j < openingHours.length; j++) {
-  document.querySelector("ul");
-  var node = document.createElement("LI");                 
-  var textnode = document.createTextNode(`${openingHours[j]}: ${store1Array[j]}`);         
-  node.appendChild(textnode);                              
-  document.querySelector("ul").appendChild(node);     
-}
+// //Create list of estimated sales by hour
+// for (var j = 0; j < openingHours.length; j++) {
+//   document.querySelector("ul");
+//   var node = document.createElement("LI");                 
+//   var textnode = document.createTextNode(`${openingHours[j]}: ${store1Array[j]}`);         
+//   node.appendChild(textnode);                              
+//   document.querySelector("ul").appendChild(node);     
+// }
 
-
-// //store 2
-// var store2 = {
-//   location: "SeaTac Airport",
-//   minCustHr: 3,
-//   maxCustHr: 24,
-//   avgCookieSale: 1.2,
-//   randNoCust: randomNoCustomersHr,
-//   createArrayOfSalesPerHour: createArrayOfSalesPerHour
-// };
-
-// //store 3
-// var store3 = {
-//   location: "Seattle Center",
-//   minCustHr: 11,
-//   maxCustHr: 38,
-//   avgCookieSale: 3.7,
-//   randNoCust: randomNoCustomersHr,
-//   createArrayOfSalesPerHour: createArrayOfSalesPerHour
-// };
-
-// //store 4
-// var store4 = {
-//   location: "Capitol Hill",
-//   minCustHr: 20,
-//   maxCustHr: 38,
-//   avgCookieSale: 2.3,
-//   randNoCust: randomNoCustomersHr,
-//   createArrayOfSalesPerHour: createArrayOfSalesPerHour
-// };
-
-// //store 5
-// var store5 = {
-//   location: "Alki",
-//   minCustHr: 2,
-//   maxCustHr: 16,
-//   avgCookieSale: 4.6,
-//   randNoCust: randomNoCustomersHr,
-//   createArrayOfSalesPerHour: createArrayOfSalesPerHour
-// };
 
 
 // // TO DISPLAY ON PAGE
