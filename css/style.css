@@ -1,3 +1,14 @@
+body {
+  background: rgb(162, 71, 21);
+}
+
+#content {
+  background: white;
+  height:1000px;
+  margin: 0 auto;
+  width: 65%;
+}
+
 #fish {
   position: absolute;
   left: 20%;
@@ -13,11 +24,4 @@ h1 {
   left: 45%;
   top: 100px;
   z-index: 2;
-}
-
-.sidebar {
-  background: #04f323;
-  display: inline-block;
-  min-height: 100px;
-  width:15%;
 }
