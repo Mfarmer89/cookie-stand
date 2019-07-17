@@ -109,17 +109,16 @@ renderBody();
 
 
 //create NEW STORE form
-let nsForm= document.getElementById("newStore"); // Finds <form> element in html & saves
-let fieldSet = renderChild(nsForm, "fieldset"); //Creates <fieldset> in <form>
-let labelEl = renderChild(fieldSet, "label", "Location: "); //Creates <label>
-labelEl.setAttribute("for", "location"); //Sets "for" attribute on label
-let inputEl = renderChild(fieldSet, "input"); //Creates <input>
-inputEl.setAttribute("id", "location"); //Sets "id" attribute on input
+// let nsForm= document.getElementById("newStore"); // Finds <form> element in html & saves
+// let fieldSet = renderChild(nsForm, "fieldset"); //Creates <fieldset> in <form>
+// let labelEl = renderChild(fieldSet, "label", "Location: "); //Creates <label>
+// labelEl.setAttribute("for", "location"); //Sets "for" attribute on label
+// let inputEl = renderChild(fieldSet, "input"); //Creates <input>
+// inputEl.setAttribute("id", "location"); //Sets "id" attribute on input
 
 
 // function formInput(parent, elementType, data, attribute, value, n) {
 //   renderChild(parent, elementType, data);
 //   for (var i = 0; i < n; i++ )
 //   Element.setAttribute(attribute, value);
-
 // }
