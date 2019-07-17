@@ -4,12 +4,20 @@
     <meta charset="utf-8">
     <title>Pat's</title>
     <link rel="stylesheet" href="css/reset.css" type="text/css">
-    <link rel="stylesheet" href="css/style.css" type="text/css">
+    <link rel="stylesheet" href="css/sales.css" type="text/css">
   </head>
   <body>
       <h2>Add A New Store</h2>
     <form id="newStore">
-
+      <label for="location">Location: </label>
+      <input type="text" id="location">
+      <label for="mincust">Minimum customers per hour: </label>
+      <input type="number" id="mincust">
+      <label for="maxcust">Location: </label>
+      <input type="number" id="maxcust">
+      <label for="avgcookiesale">Average cookies purchased per customer: </label>
+      <input type="number" id="avgcookiesale">
+      <input type="button" id="button" value="Enter">
     </form>
     <h2>Estimated Sales</h2>
     <div id="estimates">
