@@ -1,9 +1,13 @@
 "use strict";
 //Find screen height and set design
 // var screenHeight = window.innerHeight;
-var allStores = [];
-var openingHours = ["6am", "7am", "8am", "9am", "10am", "11am", "12pm", "1pm", "2pm", "3pm", "4pm", "5pm", "6pm", "7pm"]; //array of opening hours
 
+var allStores = [];
+//array of opening hours
+var openingHours = ["6am", "7am", "8am", "9am", "10am", "11am", "12pm", "1pm", "2pm", "3pm", "4pm", "5pm", "6pm", "7pm"]; 
+//creates table and first row
+var table = document.getElementById("salesTable");
+var row = document.createElement("tr");
 //Object Constructor Method
 function Store(location, minCust, maxCust, avgHrSale) {
   this.location = location;
@@ -13,30 +17,38 @@ function Store(location, minCust, maxCust, avgHrSale) {
   this.hourlySales = this.createArrayOfSalesPerHour();
   allStores.push(this);
 }
-
 //Store functions added
-
+//This function generates a random number of customers per hour based on the min & max in each object
 Store.prototype.randNoCust = function() {
   var min = Math.ceil(this.minCust);
   var max = Math.floor(this.maxCust);
   return Math.floor(Math.random() * (max - min + 1)) + min;
 };
-
-Store.prototype.createArrayOfSalesPerHour = function() {
+//This function generates a random number of cookie sales per hour
+Store.prototype.createArrayOfSalesPerHour = function() { 
   var array = [];
   for (var i = 0 ;i < openingHours.length; i++) {
     array.push(Math.round(this.randNoCust() * this.avgHrSale)); 
   }
   return array;  //save results on object -hourlySales[]
 };
-
+//This function creates an element (with data if applicable) and appends it to the parent element
 function renderChild(parent, elementType, data) {
   var element =  document.createElement(elementType);
   element.textContent = data ? data : "";
   parent.appendChild(element);
   return element;
 }
+//creates the table header line
+function renderHeader() {
+  table.appendChild(row);
+  renderChild(row, "th");
+  for (var i = 0; i < openingHours.length; i++) {
+    renderChild(row, "th", openingHours[i]);
+  }
+}
 
+//Array of store arrays
 var stores = [
   ["1st and Pike", 23, 65, 6.3],
   ["SeaTac Airport", 3, 24, 1.2],
@@ -56,33 +68,23 @@ for (var i = 0; i < stores.length; i++) {
 }
 
 
-//creates table and first row
-var table = document.getElementById("salesTable");
-var row = document.createElement("tr");
-table.appendChild(row);
-//creates table header line
-renderChild(row, "th");
-for (var i = 0; i < openingHours.length; i++) {
-  renderChild(row, "th", openingHours[i]);
+
+
+
+//creates the table store rows
+function renderBody () {
+  for (var i = 0; i < allStores.length; i++) {
+    row = renderChild(table, "tr");
+    renderChild(row, "td", allStores[i].location);
+    for(var j = 0; j < allStores[i].hourlySales.length; j++) {
+      renderChild(row, "td", allStores[i].hourlySales[j]);
+    }    
+  }
 }
 
-//Attempting to print Individual store sales
-renderChild(table, "tr");
-renderChild(row, "td", allStores[0].location);
+renderHeader();
+renderBody();
 
-for(var j = 0; j < allStores[0].hourlySales.length; j++) {
-  renderChild(row, "td", allStores[0].hourlySales[j]);
-}
-
-
-// Loop through allStores to create the table
-
-
-//Use array to create stores?
-//for loop runs through stores 
-//->CreateArrayOfSalesPerHour function
-//->creates table row
-//->OR saves as array to be accessed later
 
 
 // var parentEl = document.getElementById("estimates");
@@ -100,14 +102,13 @@ for(var j = 0; j < allStores[0].hourlySales.length; j++) {
 // }
 
 
-
 // renderChild(tableEl,'tr');
 // renderChild(rowEl,'th', openingHours[]);
 // renderChild(rowEl,'th', openingHours[]);
 
 
 
-//create form
+//create NEW STORE form
 let nsForm= document.getElementById("newStore"); // Finds <form> element in html & saves
 let fieldSet = renderChild(nsForm, "fieldset"); //Creates <fieldset> in <form>
 let labelEl = renderChild(fieldSet, "label", "Location: "); //Creates <label>

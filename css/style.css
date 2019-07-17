@@ -25,3 +25,17 @@ h1 {
   top: 100px;
   z-index: 2;
 }
+
+h2 {
+  font-size: 1.5em;
+}
+
+table, th, td {
+  border: 1px solid black;
+  padding: 0.2em 0.5em;
+}
+
+th {
+  font-weight: 600;
+
+}
