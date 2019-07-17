@@ -44,16 +44,6 @@ var stores = [
   ["Alki", 2, 16, 4.6]
 ];
 
-
-var table = document.getElementById("salesTable");
-var row = document.createElement("tr");
-table.appendChild(row);
-
-renderChild(row, "td");
-for (var i = 0; i < openingHours.length; i++) {
-  renderChild(row, "td", openingHours[i]);
-}
-
 //Creates the store objects
 for (var i = 0; i < stores.length; i++) {
   new Store(
@@ -63,6 +53,26 @@ for (var i = 0; i < stores.length; i++) {
     stores[i][3]
   );
 }
+
+
+//creates table and first row
+var table = document.getElementById("salesTable");
+var row = document.createElement("tr");
+table.appendChild(row);
+//creates table header line
+renderChild(row, "th");
+for (var i = 0; i < openingHours.length; i++) {
+  renderChild(row, "th", openingHours[i]);
+}
+
+//Attempting to print Individual store sales
+renderChild(table, "tr");
+renderChild(row, "td", allStores[0].location);
+
+for(var j = 0; j < allStores[0].hourlySales.length; j++) {
+  renderChild(row, "td", allStores[0].hourlySales[j]);
+}
+
 
 // Loop through allStores to create the table
 
