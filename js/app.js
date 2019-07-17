@@ -1,8 +1,7 @@
 "use strict";
-
-// //Find screen height and set design
+//Find screen height and set design
 // var screenHeight = window.innerHeight;
-
+var allStores = [];
 var openingHours = ["6am", "7am", "8am", "9am", "10am", "11am", "12pm", "1pm", "2pm", "3pm", "4pm", "5pm", "6pm", "7pm"]; //array of opening hours
 
 //Object Constructor Method
@@ -11,87 +10,86 @@ function Store(location, minCust, maxCust, avgHrSale) {
   this.minCust = minCust;
   this.maxCust = maxCust;
   this.avgHrSale = avgHrSale;
-};
+  this.hourlySales = this.createArrayOfSalesPerHour();
+  allStores.push(this);
+}
 
-//Store functions added 
+//Store functions added
 
 Store.prototype.randNoCust = function() {
-  var min = Math.ceil(this.minCustHr);
-  var max = Math.floor(this.maxCustHr);
+  var min = Math.ceil(this.minCust);
+  var max = Math.floor(this.maxCust);
   return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
 Store.prototype.createArrayOfSalesPerHour = function() {
   var array = [];
   for (var i = 0 ;i < openingHours.length; i++) {
-    array.push(Math.round(this.randNoCust() * this.avgCookieSale));
+    array.push(Math.round(this.randNoCust() * this.avgHrSale));
   }
-  return array;
+  return array;  //save results on object -hourlySales[]
 };
 
-//Creating individual store objects
-var store1 = new Store("1st and Pike", 23, 65, 6.3);
-var store2 = new Store("SeaTac Airport", 3, 24, 1.2);
-var store3 = new Store("Seattle Center", 11, 38, 3.7);
-var store4 = new Store("Capitol Hill", 20, 38, 2.3);
-var store5 = new Store("Alki", 2, 16, 4.6);
-
-//Array of fake table data
-var array = [
-  ["", "6:00", "7:00", "8:00"],
-  ["store1", 53, 21, 18],
-  ["store2", 83, 4, 0],
-  ["store3", 60, 121, 48]
-];
-
-var parentEl = document.getElementById("estimates");
-var tableEl = document.createElement("table");
-parentEl.appendChild(tableEl);
-for (var row = 0; row < array.length; row++) {
-  var newRow = document.createElement("tr");
-  for (var col = 0; col < array[row].length; col++) {
-    var cellType = (row === 0) ? "th" : "td";
-    var newCell = document.createElement(cellType);
-    newCell.textContent = array[row][col];
-    newRow.appendChild(newCell);
-  }
-  tableEl.appendChild(newRow);
+function renderChild(parent, elementType, data) {
+  var element =  document.createElement(elementType);
+  element.textContent = data ? data : "";
+  parent.appendChild(element);
 }
 
-
-// var store1Array = store1.createArrayOfSalesPerHour();
- 
-// //Create list of estimated sales by hour
-// for (var j = 0; j < openingHours.length; j++) {
-//   document.querySelector("ul");
-//   var node = document.createElement("LI");                 
-//   var textnode = document.createTextNode(`${openingHours[j]}: ${store1Array[j]}`);         
-//   node.appendChild(textnode);                              
-//   document.querySelector("ul").appendChild(node);     
-// }
+var stores = [
+  ["1st and Pike", 23, 65, 6.3],
+  ["SeaTac Airport", 3, 24, 1.2],
+  ["Seattle Center", 11, 38, 3.7],
+  ["Capitol Hill", 20, 38, 2.3],
+  ["Alki", 2, 16, 4.6]
+];
 
 
+var table = document.getElementById("salesTable");
+var row = document.createElement("tr");
+table.appendChild(row);
 
-// // TO DISPLAY ON PAGE
+renderChild(row, "td");
+for (var i = 0; i < openingHours.length; i++) {
+  renderChild(row, "td", openingHours[i]);
+}
 
-// var displayEstimate = function(){
-//   getElementById("location");
+//Creates the store objects
+for (var i = 0; i < stores.length; i++) {
+  new Store(
+    stores[i][0],
+    stores[i][1],
+    stores[i][2],
+    stores[i][3]
+  );
+}
 
-//   document.querySelector("ul");
-//   liEl.textContent = ``
-// }
-// getElementById("location")
+// Loop through allStores to create the table
 
-// // EXAMPLE CODE
-// function renderList() {
-//   // var ul = document.getElementsByTagName("ul")[0];
-//   // var ul = document.querySelectorAll("ul#saved")[0];
-//   var ul = document.querySelector("ul#saved");
 
-//   for (var i = 0; i < unicorns.length; i++) {
-//     var liEl = document.createElement("li");
-//     liEl.textContent = `Name: ${unicorns[i].name}, Health: ${unicorns[i].hp}, Sick: ${unicorns[i].isSick}`;
+//Use array to create stores?
+//for loop runs through stores 
+//->CreateArrayOfSalesPerHour function
+//->creates table row
+//->OR saves as array to be accessed later
 
-//     ul.appendChild(liEl);
+
+// var parentEl = document.getElementById("estimates");
+// var tableEl = document.createElement("table");
+// parentEl.appendChild(tableEl);
+// for (var row = 0; row < stores.length; row++) {
+//   var newRow = document.createElement("tr");
+//   for (var col = 0; col < stores[row].length; col++) {
+//     var cellType = (row === 0) ? "th" : "td";
+//     var newCell = document.createElement(cellType);
+//     newCell.textContent = stores[row][col];
+//     newRow.appendChild(newCell);
 //   }
+//   tableEl.appendChild(newRow);
 // }
+
+
+
+// renderChild(tableEl,'tr');
+// renderChild(rowEl,'th', openingHours[]);
+// renderChild(rowEl,'th', openingHours[]);
