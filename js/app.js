@@ -25,7 +25,7 @@ Store.prototype.randNoCust = function() {
 Store.prototype.createArrayOfSalesPerHour = function() {
   var array = [];
   for (var i = 0 ;i < openingHours.length; i++) {
-    array.push(Math.round(this.randNoCust() * this.avgHrSale));
+    array.push(Math.round(this.randNoCust() * this.avgHrSale)); 
   }
   return array;  //save results on object -hourlySales[]
 };
