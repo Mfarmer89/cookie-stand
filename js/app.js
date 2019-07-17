@@ -34,6 +34,7 @@ function renderChild(parent, elementType, data) {
   var element =  document.createElement(elementType);
   element.textContent = data ? data : "";
   parent.appendChild(element);
+  return element;
 }
 
 var stores = [
@@ -103,3 +104,21 @@ for(var j = 0; j < allStores[0].hourlySales.length; j++) {
 // renderChild(tableEl,'tr');
 // renderChild(rowEl,'th', openingHours[]);
 // renderChild(rowEl,'th', openingHours[]);
+
+
+
+//create form
+let nsForm= document.getElementById("newStore"); // Finds <form> element in html & saves
+let fieldSet = renderChild(nsForm, "fieldset"); //Creates <fieldset> in <form>
+let labelEl = renderChild(fieldSet, "label", "Location: "); //Creates <label>
+labelEl.setAttribute("for", "location"); //Sets "for" attribute on label
+let inputEl = renderChild(fieldSet, "input"); //Creates <input>
+inputEl.setAttribute("id", "location"); //Sets "id" attribute on input
+
+
+// function formInput(parent, elementType, data, attribute, value, n) {
+//   renderChild(parent, elementType, data);
+//   for (var i = 0; i < n; i++ )
+//   Element.setAttribute(attribute, value);
+
+// }
