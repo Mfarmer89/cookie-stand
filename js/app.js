@@ -2,6 +2,7 @@
 //Find screen height and set design
 // var screenHeight = window.innerHeight;
 
+
 var allStores = [];
 //array of opening hours
 var openingHours = ["6am", "7am", "8am", "9am", "10am", "11am", "12pm", "1pm", "2pm", "3pm", "4pm", "5pm", "6pm", "7pm"]; 
@@ -70,7 +71,6 @@ for (var i = 0; i < stores.length; i++) {
 
 
 
-
 //creates the table store rows
 function renderBody () {
   for (var i = 0; i < allStores.length; i++) {
@@ -122,3 +122,14 @@ renderBody();
 //   for (var i = 0; i < n; i++ )
 //   Element.setAttribute(attribute, value);
 // }
+
+
+//???????
+// let submitFormButton = document.getElementById("newFormButton");
+// submitFormButton.addEventListener("click", function() {
+//   let inLocation = event.target.location.value;
+//   let inCustMin = event.target.mincust.value;
+//   let inCustMax = event.target.maxcust.value;
+//   let inAvgCSale = event.target.avgcookiesale.value;
+//   console.log(event.target);
+// });
