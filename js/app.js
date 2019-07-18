@@ -5,7 +5,7 @@
 
 var allStores = [];
 //array of opening hours
-var openingHours = ["6am", "7am", "8am", "9am", "10am", "11am", "12pm", "1pm", "2pm", "3pm", "4pm", "5pm", "6pm", "7pm"]; 
+var openingHours = ["6am", "7am", "8am", "9am", "10am", "11am", "12pm", "1pm", "2pm", "3pm", "4pm", "5pm", "6pm", "7pm"];
 //creates table and first row
 var table = document.getElementById("salesTable");
 var row = document.createElement("tr");
@@ -15,7 +15,7 @@ function Store(location, minCust, maxCust, avgHrSale) {
   this.minCust = minCust;
   this.maxCust = maxCust;
   this.avgHrSale = avgHrSale;
-  this.hourlySales = this.createArrayOfSalesPerHour();
+  this.hourlySales = [];
   allStores.push(this);
 }
 //Store functions added
@@ -25,13 +25,31 @@ Store.prototype.randNoCust = function() {
   var max = Math.floor(this.maxCust);
   return Math.floor(Math.random() * (max - min + 1)) + min;
 };
-//This function generates a random number of cookie sales per hour
+
+//Creates array of sales/hr per store and saves in store array
 Store.prototype.createArrayOfSalesPerHour = function() { 
-  var array = [];
+  this.hourlySales = [];
   for (var i = 0 ;i < openingHours.length; i++) {
-    array.push(Math.round(this.randNoCust() * this.avgHrSale)); 
+    this.hourlySales.push(Math.round(this.randNoCust() * this.avgHrSale)); 
   }
-  return array;  //save results on object -hourlySales[]
+}
+
+//Create sales array
+Store.prototype.createSalesRow = function() {
+  let salesArray = [];
+  salesArray[0] = this.location;
+  for (var i = 0; i < this.hourlySales.length; i++) {
+    salesArray[i+1] = this.hourlySales[i];
+  }
+ //find sum of all numbers in hourlySales array
+  salesArray[salesArray.length] = sum;
+
+};
+
+
+
+
+
 };
 //This function creates an element (with data if applicable) and appends it to the parent element
 function renderChild(parent, elementType, data) {
@@ -47,6 +65,14 @@ function renderHeader() {
   for (var i = 0; i < openingHours.length; i++) {
     renderChild(row, "th", openingHours[i]);
   }
+}
+
+function renderBody() {
+
+}
+
+function renderFooter() {
+
 }
 
 //Array of store arrays
@@ -124,12 +150,20 @@ renderBody();
 // }
 
 
-//???????
-// let submitFormButton = document.getElementById("newFormButton");
-// submitFormButton.addEventListener("click", function() {
-//   let inLocation = event.target.location.value;
-//   let inCustMin = event.target.mincust.value;
-//   let inCustMax = event.target.maxcust.value;
-//   let inAvgCSale = event.target.avgcookiesale.value;
-//   console.log(event.target);
-// });
+
+let submitFormButton = document.getElementById("newFormButton");
+submitFormButton.addEventListener("submit", function(event) {
+  event.preventDefault();
+  //store all form values for use
+  let inLocation = event.target.location.value;
+  let inCustMin = event.target.mincust.value;
+  let inCustMax = event.target.maxcust.value;
+  let inAvgCSale = event.target.avgcookiesale.value;
+  //create new store object
+  new Store(inLocation, inCustMin, inCustMax, inAvgCSale);
+  //create row of sales data for new store
+  createSalesRow(allStores[allStores.length-1]);
+  //Append to table
+
+  event.target.reset();
+});
