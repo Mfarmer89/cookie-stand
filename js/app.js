@@ -30,9 +30,19 @@ Store.prototype.randNoCust = function() {
 Store.prototype.createArrayOfSalesPerHour = function() { 
   this.hourlySales = [];
   for (var i = 0 ;i < openingHours.length; i++) {
-    this.hourlySales.push(Math.round(this.randNoCust() * this.avgHrSale)); 
+    this.hourlySales.push(Math.round(this.randNoCust() * this.avgHrSale));
   }
+};
+
+
+function sumArray(sumArr) {
+  var total = 0;
+  for(var i = 0; i < sumArr.length; i++) {
+    total += sumArr[i];
+  }
+  return total;
 }
+
 
 //Create sales array
 Store.prototype.createSalesRow = function() {
@@ -41,16 +51,11 @@ Store.prototype.createSalesRow = function() {
   for (var i = 0; i < this.hourlySales.length; i++) {
     salesArray[i+1] = this.hourlySales[i];
   }
- //find sum of all numbers in hourlySales array
-  salesArray[salesArray.length] = sum;
-
+  salesArray[salesArray.length] = sumArray(this.hourlySales);
 };
 
 
 
-
-
-};
 //This function creates an element (with data if applicable) and appends it to the parent element
 function renderChild(parent, elementType, data) {
   var element =  document.createElement(elementType);
@@ -61,19 +66,15 @@ function renderChild(parent, elementType, data) {
 //creates the table header line
 function renderHeader() {
   table.appendChild(row);
-  renderChild(row, "th");
+  renderChild(row, "th", "Location");
   for (var i = 0; i < openingHours.length; i++) {
     renderChild(row, "th", openingHours[i]);
   }
+  renderChild(row, "th", "Totals");
 }
 
-function renderBody() {
 
-}
 
-function renderFooter() {
-
-}
 
 //Array of store arrays
 var stores = [
@@ -91,66 +92,46 @@ for (var i = 0; i < stores.length; i++) {
     stores[i][1],
     stores[i][2],
     stores[i][3]
+    this.createArrayOfSalesPerHour();//this doesn't work
   );
 }
 
-
-
+function renderStore {
+  row = renderChild(table, "tr");
+  renderChild(row, "td", this.location);
+  for(var i = 0; i < this.hourlySales.length; i++) {
+    renderChild(row, "td", this.hourlySales[i]);
+  }
+  renderChild(row, "td", "sum");
+}
 
 //creates the table store rows
-function renderBody () {
-  for (var i = 0; i < allStores.length; i++) {
-    row = renderChild(table, "tr");
-    renderChild(row, "td", allStores[i].location);
-    for(var j = 0; j < allStores[i].hourlySales.length; j++) {
-      renderChild(row, "td", allStores[i].hourlySales[j]);
-    }    
+// function renderBody () {
+//   for (var i = 0; i < allStores.length; i++) {
+//     row = renderChild(table, "tr");
+//     renderChild(row, "td", allStores[i].location);
+//     allStores[i].createArrayOfSalesPerHour();
+//     for(var j = 0; j < allStores[i].hourlySales.length; j++) {
+//       renderChild(row, "td", allStores[i].hourlySales[j]);
+//     }
+//     var sum = sumArray(allStores[i].hourlySales);
+//     renderChild(row, "td", sum);
+//   }
+// }
+function renderFooter() {
+  row = renderChild(table, "tr");
+  renderChild(row, "td", "Totals");
+  for (var i = 0; i <= openingHours.length; i++) {
+    renderChild(row, "td", "sum");
   }
 }
 
+
 renderHeader();
 renderBody();
+renderFooter();
 
-
-
-// var parentEl = document.getElementById("estimates");
-// var tableEl = document.createElement("table");
-// parentEl.appendChild(tableEl);
-// for (var row = 0; row < stores.length; row++) {
-//   var newRow = document.createElement("tr");
-//   for (var col = 0; col < stores[row].length; col++) {
-//     var cellType = (row === 0) ? "th" : "td";
-//     var newCell = document.createElement(cellType);
-//     newCell.textContent = stores[row][col];
-//     newRow.appendChild(newCell);
-//   }
-//   tableEl.appendChild(newRow);
-// }
-
-
-// renderChild(tableEl,'tr');
-// renderChild(rowEl,'th', openingHours[]);
-// renderChild(rowEl,'th', openingHours[]);
-
-
-
-//create NEW STORE form
-// let nsForm= document.getElementById("newStore"); // Finds <form> element in html & saves
-// let fieldSet = renderChild(nsForm, "fieldset"); //Creates <fieldset> in <form>
-// let labelEl = renderChild(fieldSet, "label", "Location: "); //Creates <label>
-// labelEl.setAttribute("for", "location"); //Sets "for" attribute on label
-// let inputEl = renderChild(fieldSet, "input"); //Creates <input>
-// inputEl.setAttribute("id", "location"); //Sets "id" attribute on input
-
-
-// function formInput(parent, elementType, data, attribute, value, n) {
-//   renderChild(parent, elementType, data);
-//   for (var i = 0; i < n; i++ )
-//   Element.setAttribute(attribute, value);
-// }
-
-
-
+//New Store Form
 let submitFormButton = document.getElementById("newFormButton");
 submitFormButton.addEventListener("submit", function(event) {
   event.preventDefault();
