@@ -7,7 +7,6 @@ var allStores = [];
 var openingHours = ["6am", "7am", "8am", "9am", "10am", "11am", "12pm", "1pm", "2pm", "3pm", "4pm", "5pm", "6pm", "7pm"];
 //creates table and first row
 var table = document.getElementById("salesTable");
-var row = document.createElement("tr");
 //Object Constructor Method
 function Store(location, minCust, maxCust, avgHrSale) {
   this.location = location;
@@ -18,8 +17,8 @@ function Store(location, minCust, maxCust, avgHrSale) {
   this.createArrayOfSalesPerHour = function() {
     for (var i = 0 ;i < openingHours.length; i++) {
       this.hourlySales.push(Math.round(this.randNoCust() * this.avgHrSale));
-    } 
-  }
+    }
+  };
   this.createArrayOfSalesPerHour();
   allStores.push(this);
 }
@@ -32,7 +31,7 @@ Store.prototype.randNoCust = function() {
 };
 
 Store.prototype.renderStore = function() {
-  row = renderChild(table, "tr");
+  var row = renderChild(table, "tr");
   renderChild(row, "td", this.location);
   for(var i = 0; i < this.hourlySales.length; i++) {
     renderChild(row, "td", this.hourlySales[i]);
@@ -59,6 +58,7 @@ function renderChild(parent, elementType, data) {
 
 //creates the table header
 function renderHeader() {
+  var row = document.createElement("tr");
   table.appendChild(row);
   renderChild(row, "th", "Location");
   for (var i = 0; i < openingHours.length; i++) {
@@ -70,7 +70,7 @@ function renderHeader() {
 //creates the table footer
 function renderFooter() {
   let tTotal = 0;
-  row = renderChild(table, "tr");
+  var row = renderChild(table, "tr");
   renderChild(row, "td", "Totals");
   for(var i = 0; i < openingHours.length; i++) {
     let total = 0;
@@ -84,6 +84,7 @@ function renderFooter() {
 }
 //creates the table
 function renderTable() {
+  document.getElementById("salesTable").innerHTML = "";
   renderHeader();
   for (var i = 0; i < allStores.length; i++) {
     allStores[i].renderStore();
@@ -113,7 +114,7 @@ for (var i = 0; i < stores.length; i++) {
 renderTable();
 
 //New Store Form
-let submitFormButton = document.getElementById("newFormButton");
+let submitFormButton = document.getElementById("newStore");
 submitFormButton.addEventListener("submit", function(event) {
   event.preventDefault();
   //store all form values for use
@@ -125,7 +126,8 @@ submitFormButton.addEventListener("submit", function(event) {
   new Store(inLocation, inCustMin, inCustMax, inAvgCSale);
   // this.renderStore();
   table = document.getElementById("salesTable");
-  allStores[allStores.length-1].renderStore();
+  renderTable();
+  // allStores[allStores.length-1].renderStore();
   // createSalesRow(allStores[allStores.length-1]);
   event.target.reset();
 });
