@@ -2,7 +2,6 @@
 //Find screen height and set design
 // var screenHeight = window.innerHeight;
 
-
 var allStores = [];
 //array of opening hours
 var openingHours = ["6am", "7am", "8am", "9am", "10am", "11am", "12pm", "1pm", "2pm", "3pm", "4pm", "5pm", "6pm", "7pm"];
@@ -16,6 +15,12 @@ function Store(location, minCust, maxCust, avgHrSale) {
   this.maxCust = maxCust;
   this.avgHrSale = avgHrSale;
   this.hourlySales = [];
+  this.createArrayOfSalesPerHour = function() {
+    for (var i = 0 ;i < openingHours.length; i++) {
+      this.hourlySales.push(Math.round(this.randNoCust() * this.avgHrSale));
+    } 
+  }
+  this.createArrayOfSalesPerHour();
   allStores.push(this);
 }
 //Store functions added
@@ -26,15 +31,16 @@ Store.prototype.randNoCust = function() {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
-//Creates array of sales/hr per store and saves in store array
-Store.prototype.createArrayOfSalesPerHour = function() { 
-  this.hourlySales = [];
-  for (var i = 0 ;i < openingHours.length; i++) {
-    this.hourlySales.push(Math.round(this.randNoCust() * this.avgHrSale));
+Store.prototype.renderStore = function() {
+  row = renderChild(table, "tr");
+  renderChild(row, "td", this.location);
+  for(var i = 0; i < this.hourlySales.length; i++) {
+    renderChild(row, "td", this.hourlySales[i]);
   }
-};
+  renderChild(row, "td", sumArray(this.hourlySales));
+}
 
-
+//This function finds the sum of all elements in an array
 function sumArray(sumArr) {
   var total = 0;
   for(var i = 0; i < sumArr.length; i++) {
@@ -43,19 +49,6 @@ function sumArray(sumArr) {
   return total;
 }
 
-
-//Create sales array
-Store.prototype.createSalesRow = function() {
-  let salesArray = [];
-  salesArray[0] = this.location;
-  for (var i = 0; i < this.hourlySales.length; i++) {
-    salesArray[i+1] = this.hourlySales[i];
-  }
-  salesArray[salesArray.length] = sumArray(this.hourlySales);
-};
-
-
-
 //This function creates an element (with data if applicable) and appends it to the parent element
 function renderChild(parent, elementType, data) {
   var element =  document.createElement(elementType);
@@ -63,7 +56,8 @@ function renderChild(parent, elementType, data) {
   parent.appendChild(element);
   return element;
 }
-//creates the table header line
+
+//creates the table header
 function renderHeader() {
   table.appendChild(row);
   renderChild(row, "th", "Location");
@@ -73,8 +67,29 @@ function renderHeader() {
   renderChild(row, "th", "Totals");
 }
 
-
-
+//creates the table footer
+function renderFooter() {
+  let tTotal = 0;
+  row = renderChild(table, "tr");
+  renderChild(row, "td", "Totals");
+  for(var i = 0; i < openingHours.length; i++) {
+    let total = 0;
+    for(var j = 0; j < allStores.length; j++) {
+      total += allStores[j].hourlySales[i]; 
+    }
+    tTotal += total;
+    renderChild(row, "td", total);
+  }
+  renderChild(row, "td", tTotal);
+}
+//creates the table
+function renderTable() {
+  renderHeader();
+  for (var i = 0; i < allStores.length; i++) {
+    allStores[i].renderStore();
+  }
+  renderFooter();
+}
 
 //Array of store arrays
 var stores = [
@@ -92,44 +107,10 @@ for (var i = 0; i < stores.length; i++) {
     stores[i][1],
     stores[i][2],
     stores[i][3]
-    this.createArrayOfSalesPerHour();//this doesn't work
   );
 }
 
-function renderStore {
-  row = renderChild(table, "tr");
-  renderChild(row, "td", this.location);
-  for(var i = 0; i < this.hourlySales.length; i++) {
-    renderChild(row, "td", this.hourlySales[i]);
-  }
-  renderChild(row, "td", "sum");
-}
-
-//creates the table store rows
-// function renderBody () {
-//   for (var i = 0; i < allStores.length; i++) {
-//     row = renderChild(table, "tr");
-//     renderChild(row, "td", allStores[i].location);
-//     allStores[i].createArrayOfSalesPerHour();
-//     for(var j = 0; j < allStores[i].hourlySales.length; j++) {
-//       renderChild(row, "td", allStores[i].hourlySales[j]);
-//     }
-//     var sum = sumArray(allStores[i].hourlySales);
-//     renderChild(row, "td", sum);
-//   }
-// }
-function renderFooter() {
-  row = renderChild(table, "tr");
-  renderChild(row, "td", "Totals");
-  for (var i = 0; i <= openingHours.length; i++) {
-    renderChild(row, "td", "sum");
-  }
-}
-
-
-renderHeader();
-renderBody();
-renderFooter();
+renderTable();
 
 //New Store Form
 let submitFormButton = document.getElementById("newFormButton");
@@ -140,11 +121,11 @@ submitFormButton.addEventListener("submit", function(event) {
   let inCustMin = event.target.mincust.value;
   let inCustMax = event.target.maxcust.value;
   let inAvgCSale = event.target.avgcookiesale.value;
-  //create new store object
+  //create new store object & render to table
   new Store(inLocation, inCustMin, inCustMax, inAvgCSale);
-  //create row of sales data for new store
-  createSalesRow(allStores[allStores.length-1]);
-  //Append to table
-
+  // this.renderStore();
+  table = document.getElementById("salesTable");
+  allStores[allStores.length-1].renderStore();
+  // createSalesRow(allStores[allStores.length-1]);
   event.target.reset();
 });
