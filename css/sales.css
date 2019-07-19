@@ -1,0 +1,40 @@
+body {
+  padding: 5em;
+}
+
+h2 {
+  font-size: 1.5em;
+  margin: 0 auto 2em;
+  text-align: center;
+  text-decoration: underline;
+}
+
+form {
+  border: solid 2px black;
+  margin: 2em auto;
+  padding: 3em;
+}
+
+#button {
+  border-width: 2px;
+  font-size: 18px;
+  margin-top: 2em;
+}
+
+
+
+input {
+  display: block;
+  margin: 0.5em;
+}
+
+table, th, td {
+  border: 1px solid black;
+  font-size: 1.1em;
+  margin: auto;
+  padding: 0.2em 0.5em;
+}
+
+th {
+  font-weight: 600;
+}
