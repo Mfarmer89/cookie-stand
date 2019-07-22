@@ -63,6 +63,17 @@ li {
   padding-top: 1em;
 }
 
+#gallery {
+  align-content: center;
+  margin-top: 2em;
+  text-align: center;
+}
+
+#gallery img {
+  height: 200px;
+  margin: 1em;
+}
+
 footer {
   color:rgb(112, 100, 85);
   font-size: 1.2em;

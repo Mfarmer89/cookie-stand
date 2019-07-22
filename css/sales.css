@@ -1,5 +1,16 @@
 body {
-  padding: 5em;
+  background: rgb(162, 71, 21);
+}
+#content {
+  background: white;
+  height:100%;
+  margin: 0 auto;
+  padding: 5em 1em;
+  width: 80%;
+}
+
+table, form {
+  background: white;
 }
 
 h2 {
@@ -15,13 +26,14 @@ form {
   padding: 3em;
 }
 
-#button {
-  border-width: 2px;
-  font-size: 18px;
+button {
+  background: rgb(112, 100, 85);
+  color: white;
+  font-size: 1.3em;
   margin-top: 2em;
+  padding: 0.2em 1em;
+  text-decoration: none;
 }
-
-
 
 input {
   display: block;
@@ -37,4 +49,9 @@ table, th, td {
 
 th {
   font-weight: 600;
+}
+
+#chinook {
+  margin: 4em auto 0;
+  text-align: center;
 }
